@@ -1,0 +1,86 @@
+{% include 'include.html' %}
+{% include 'navbar.html' %}
+{% block body %}
+{% load static %}
+
+<body style="background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.3)),url('{% static 'img/healhcare-4.jpg' %}');
+        background-repeat: no-repeat;
+        background-size: cover;">
+    
+    <div class="row register-form">
+        <div class="col-md-8 offset-md-2 my-4">
+            <form class="custom-form bg-white " style="margin-top: 0px;" method="post">
+                {% csrf_token %}
+                <h1 class="text-dark">Register </h1>
+                <div class="form-row form-group">
+                    <div class="col-sm-4 label-column">
+                      
+                    </div>
+                    <div class="col-sm-6 input-column">
+                        <input class="form-control" type="text" name="name" placeholder="Full Name">
+                    </div>
+                </div>
+                <div class="form-row form-group">
+                    <div class="col-sm-4 label-column">
+                      
+                    </div>
+                    <div class="col-sm-6 input-column">
+                        <input class="form-control" type="email" name="email" placeholder="Email" required="">
+                    </div>
+                </div>
+                <div class="form-row form-group">
+                    <div class="col-sm-4 label-column">
+                       
+                    </div>
+                    <div class="col-sm-6 input-column">
+                        <input class="form-control" type="tel" name="phonenumber" placeholder="Phone Number" required="">
+                    </div>
+                </div>
+
+                <div class="form-row form-group">
+                    <div class="col-sm-4 label-column">
+                        
+                    </div>
+                    <div class="col-sm-6 input-column">
+                        <input class="form-control" type="password" name="password" placeholder="Password" required="">
+                    </div>
+                </div>
+
+                <div class="form-row form-group">
+                    <div class="col-sm-4 label-column">
+                       
+                    </div>
+                    <div class="col-sm-6 input-column">
+                        <input class="form-control" type="password" name="repeatpassword" placeholder="Confirm Password" required="">
+                    </div>
+                </div>
+                <div class="form-row form-group">
+                    <div class="col-sm-4 label-column">
+                        
+                    </div>
+                    <div class="col-sm-6 input-column">
+                        <select class="form-control" name="gender" placeholder="Gender" required="">
+                            <optgroup label="Select Gender">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary submit-button shadow-lg p-3 mb-5 bg-body rounded" type="submit">Create Account</button><br />
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+                <a class="text-dark" href="{%url 'loginpage' %}">Already Have An Account? Login</a>
+            </form>
+
+        </div>
+    </div>
+    <div class="scroll-top-wrapper"><span class="scroll-top-inner"><i class="fa fa-arrow-circle-up"></i></span></div>
+    <div class="footer text-center text-white">
+        Copyright &copy; 2024 &mdash; HealthCare
+    </div>
+</body>
+{% endblock %}

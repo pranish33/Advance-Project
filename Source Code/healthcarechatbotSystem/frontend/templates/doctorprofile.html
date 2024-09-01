@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% include 'include.html' %}
+    {% load static %}
+</head>
+
+<body>
+ 
+    <div id="wrapper">
+        {% include 'doctor_sidenav.html' %}
+        <div class="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="form-group">
+                    <div class="col-md-8 offset-md-2">
+                        {% for d in doctor_detials %}
+                        <form class="custom-form" style="margin-top: 0px;">
+                            <h1 class="text-center text-light">Profile</h1>
+                            <div class="form-row form-group my-4">
+                                <div class="col-sm-4 label-column ">
+                                    <label class="col-form-label text-light" for="name-input-field">Name </label>
+                                </div>
+                                <div class="col-sm-6 input-column">
+                                    <input class="form-control" type="text" readonly="" value="{{ d.name }}">
+                                </div>
+                            </div>
+                            <div class="form-row form-group">
+                                <div class="col-sm-4 label-column">
+                                    <label class="col-form-label text-light" for="email-input-field">Email </label>
+                                </div>
+                                <div class="col-sm-6 input-column">
+                                    <input class="form-control" type="email" readonly="" value="{{ d.email }}">
+                                </div>
+                            </div>
+                            <div class="form-row form-group">
+                                <div class="col-sm-4 label-column">
+                                    <label class="col-form-label text-light" for="dropdown-input-field">Gender</label>
+                                </div>
+                                <div class="col-sm-6 input-column">
+                                    <input type="text" class="form-control" readonly="" value="{{ d.gender }}">
+                                </div>
+                            </div>
+                            <div class="form-row form-group">
+                                <div class="col-sm-4 label-column text-light">
+                                    <label class="col-form-label" for="name-input-field">Phone Number</label>
+                                </div>
+                                <div class="col-sm-6 input-column">
+                                    <input class="form-control" type="tel" readonly="" value="{{ d.phonenumber }}">
+                                </div>
+                            </div>
+                            <div class="form-row form-group">
+                                <div class="col-sm-4 label-column text-light">
+                                    <label class="col-form-label" for="name-input-field">Address</label>
+                                </div>
+                                <div class="col-sm-6 input-column">
+                                    <textarea class="form-control" readonly="">{{ d.address }}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-row form-group">
+                                <div class="col-sm-4 label-column">
+                                    <label class="col-form-label text-light" for="name-input-field">NMC Number</label>
+                                </div>
+                                <div class="col-sm-6 input-column">
+                                    <input class="form-control" type="text" value="{{ d.nmcnumber }}" readonly="">
+                                </div>
+                            </div>
+
+                            <div class="form-row form-group">
+                                <div class="col-sm-4 label-column text-light">
+                                    <label class="col-form-label" for="name-input-field">Specialization</label>
+                                </div>
+                                <div class="col-sm-6 input-column">
+                                    <input type="text" class="form-control" readonly="" value="{{ d.specialization }}">
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <a href="{%url 'updatepassword' %}" class="btn btn-primary btn-center">Update Password</a>
+                                    </div>
+                                </div>
+
+                        </form>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-top-wrapper"><span class="scroll-top-inner"><i class="fa fa-arrow-circle-up"></i></span></div>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/back-to-top-scroll.js' %}"></script>
+<script src="{% static 'js/Bold-BS4-Animated-Back-To-Top.js' %}"></script>
+<script src="{% static 'js/bs-init.js' %}"></script>
+<script src="{% static 'js/Sidebar-Menu.js' %}"></script>
+</body>
+
+</html>

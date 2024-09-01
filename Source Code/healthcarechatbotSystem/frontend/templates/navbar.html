@@ -1,0 +1,30 @@
+{% load static %}
+<nav class="navbar navbar-dark navbar-expand-md sticky-top bg-dark">
+    <div class="container-fluid">
+        <img src="{% static 'img/mainicon.jfif' %}" width="30px" height="30px" alt="10px">
+        <a class="navbar-brand text-center" href="{% url 'aboutpage' %}" style="margin: 0px 0px;"><span class="colorchange">HealthCare</span></a>
+        
+        <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
+            <span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navcol-1">
+            <ul class="nav navbar-nav text-light-50 ml-auto">
+                <style>
+                    li {
+                        margin-left: 15px;
+                    }
+
+                        li a:hover {
+                            border-bottom: 1px solid blue;
+                        }
+                </style>
+                <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'homepage' %}">HOME</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'aboutpage' %}">ABOUT</a></li>
+
+                <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'loginpage' %}">ACCOUNT</a></li>
+
+                <li class="nav-item" role="presentation"><a class="nav-link" href="">CHATROOM</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
