@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path
 #from my_Apps.views import *
 from . import views
+from .import chatbotviews
 from django.contrib.auth import views as auth_views
 
 
@@ -16,7 +17,7 @@ urlpatterns = [
     path('adminaddDoctor/',views.adminaddDoctor,name='adminaddDoctor'),
     path('adminviewDoctor/',views.adminviewDoctor,name='adminviewDoctor'),
     path('adminDeleteDoctor<int:pid><str:email>',views.admin_delete_doctor,name='admin_delete_doctor'),
-    path('chatroom/', views.chatbot_response, name= 'chatbot_response'),
+    path('chatroom/', chatbotviews.chatroom, name= 'chatroom'),
     path('adminviewAppointment/',views.adminviewAppointment,name='adminviewAppointment'),
     path('home/',views.Home,name='home'),
     path('profile/',views.profile,name='profile'),
