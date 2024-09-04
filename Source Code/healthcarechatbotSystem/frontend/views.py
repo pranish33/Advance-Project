@@ -114,6 +114,11 @@ def createaccountpage(request):
 
     return render(request, 'createaccount.html')
 
+from django.http import JsonResponse
+
+def chatbot_response(request):
+        return render(request, 'chatroom.html')
+
 
 # update Password
 def updatepassword(request):
