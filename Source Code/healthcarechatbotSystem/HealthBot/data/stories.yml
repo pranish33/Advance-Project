@@ -1,0 +1,458 @@
+version: "2.0"
+
+stories:
+
+- story: user greet
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- story: user bye
+  steps:
+    - action: utter_goodbye
+- story: thank you
+  steps:
+    - action: utter_thanks
+- story: head main
+  steps:
+    - intent: head_symptom
+    - action: utter_day
+    - intent: day
+    - action: utter_head_stomach_symptom
+
+- story: head stomach ache
+  steps:
+    - action: utter_head_stomach_symptom
+    - intent: affirm
+    - action: utter_head_stomach_response
+    - action: utter_did_that_help 
+
+- story: headache area
+  steps:
+    - action: utter_head_stomach_symptom
+    - intent: deny
+    - action: utter_head_symptom
+
+- story: headache whole
+  steps:
+    - intent: head_whole
+    - action: utter_head_whole_response
+    - action: utter_did_that_help 
+
+- story: headache side
+  steps:
+    - intent: head_sides
+    - action: utter_head_sides_response
+    - action: utter_did_that_help
+
+- story: headache crown
+  steps:
+    - intent: head_crown
+    - action: utter_head_crown_response
+    - action: utter_did_that_help
+
+- story: headache eyes
+  steps:
+    - intent: head_eyes
+    - action: utter_head_eyes_response
+    - action: utter_did_that_help
+
+- story: flu
+  steps:
+    - intent: flu_symptom
+    - action: utter_day
+    - intent: day
+    - action: utter_flu_response
+    - action: utter_did_that_help
+
+- story: dry vision
+  steps:
+    - intent: vision_symptom
+    - action: utter_day
+    - intent: day
+    - action: utter_vision_types
+    - intent: affirm
+    - action: utter_dry_eyes_response
+    - action: utter_did_that_help
+
+- story: allergy vision
+  steps:
+    - intent: vision_symptom
+    - action: utter_day
+    - intent: day
+    - action: utter_vision_types
+    - intent: deny
+    - action: utter_allergy_eyes_response
+    - action: utter_did_that_help
+
+- story: gas stomach
+  steps:
+    - intent: stomach_symptom
+    - action: utter_day
+    - intent: day
+    - action: utter_stomach_types
+    - intent: affirm
+    - action: utter_gas_response
+    - action: utter_did_that_help
+
+- story: poison stomach
+  steps:
+    - intent: stomach_symptom
+    - action: utter_day
+    - intent: day
+    - action: utter_stomach_types
+    - intent: deny
+    - action: utter_poison_response
+    - action: utter_did_that_help
+
+# [1111] - Above age 45, BMI>25, has symptoms and experienced Sudden Weight Loss - (HIGH RISK)
+- story: Diagnosis
+  steps:
+  - intent: diabetes_diagnosis
+  - action: utter_diabetes_diagnosis
+  - action: utter_get_age_group
+  - intent: affirm
+  - action: utter_get_bmi
+  - intent: affirm
+  - action: utter_get_symptoms
+  - intent: affirm
+  - action: utter_weight_loss
+  - intent: affirm
+  - action: utter_high_risk
+  - intent: goodbye
+  - action: utter_goodbye
+
+
+# [0111] - Below age 45,  but BMI>25, experienced Sudden Weight Loss and has Symptoms- (HIGH RISK)
+- story: Diagnosis
+  steps:
+  - intent: diabetes_diagnosis
+  - action: utter_diabetes_diagnosis
+  - action: utter_get_age_group
+  - intent: deny
+  - action: utter_get_bmi
+  - intent: affirm
+  - action: utter_get_symptoms
+  - intent: affirm
+  - action: utter_weight_loss
+  - intent: affirm
+  - action: utter_high_risk
+  - intent: goodbye
+  - action: utter_goodbye
+
+
+# [0110] - Below age 45 and did not experience Sudden Weight Loss,  but BMI>25 and has Symptoms - (HIGH RISK)
+- story: Diagnosis
+  steps:
+  - intent: diabetes_diagnosis
+  - action: utter_diabetes_diagnosis
+  - action: utter_get_age_group
+  - intent: deny
+  - action: utter_get_bmi
+  - intent: affirm
+  - action: utter_get_symptoms
+  - intent: affirm
+  - action: utter_weight_loss
+  - intent: deny
+  - action: utter_high_risk
+  - intent: goodbye
+  - action: utter_goodbye
+
+
+# [0011] - Below age 45 and BMI<25, but experienced Sudden Weight Loss, and has Symptoms - (HIGH RISK)
+- story: Diagnosis
+  steps:
+  - intent: diabetes_diagnosis
+  - action: utter_diabetes_diagnosis
+  - action: utter_get_age_group
+  - intent: deny
+  - action: utter_get_bmi
+  - intent: deny
+  - action: utter_get_symptoms
+  - intent: affirm
+  - action: utter_weight_loss
+  - intent: affirm
+  - action: utter_high_risk
+  - intent: goodbye
+  - action: utter_goodbye
+
+
+# [1110] - Did not experience Sudden Weight Loss, but above age 45, BMI>25 and has Symptoms - (HIGH RISK)
+- story: Diagnosis
+  steps:
+  - intent: diabetes_diagnosis
+  - action: utter_diabetes_diagnosis
+  - action: utter_get_age_group
+  - intent: affirm
+  - action: utter_get_bmi
+  - intent: affirm
+  - action: utter_get_symptoms
+  - intent: affirm
+  - action: utter_weight_loss
+  - intent: deny
+  - action: utter_high_risk
+  - intent: goodbye
+  - action: utter_goodbye
+
+
+# [1011] - BMI<25, but Above age 45, has symptoms and experienced Sudden Weight Loss - (HIGH RISK)
+- story: Diagnosis
+  steps:
+  - intent: diabetes_diagnosis
+  - action: utter_diabetes_diagnosis
+  - action: utter_get_age_group
+  - intent: affirm
+  - action: utter_get_bmi
+  - intent: deny
+  - action: utter_get_symptoms
+  - intent: affirm
+  - action: utter_weight_loss
+  - intent: affirm
+  - action: utter_high_risk
+  - intent: goodbye
+  - action: utter_goodbye
+
+
+# [0010] - Below age 45 and BMI<25, did not experience Sudden Weight Loss, but has Symptoms - (MODERATE RISK)
+- story: Diagnosis
+  steps:
+
+  - intent: diabetes_diagnosis
+  - action: utter_diabetes_diagnosis
+  - action: utter_get_age_group
+  - intent: deny
+  - action: utter_get_bmi
+  - intent: deny
+  - action: utter_get_symptoms
+  - intent: affirm
+  - action: utter_weight_loss
+  - intent: deny
+  - action: utter_moderate_risk
+  - intent: goodbye
+  - action: utter_goodbye
+
+# [1010] - BMI<25 and did not experience Sudden Weight Loss, but Above age 45 and has Symptoms - (MODERATE RISK)
+- story: Diagnosis
+  steps:
+  - intent: diabetes_diagnosis
+  - action: utter_diabetes_diagnosis
+  - action: utter_get_age_group
+  - intent: affirm
+  - action: utter_get_bmi
+  - intent: deny
+  - action: utter_get_symptoms
+  - intent: affirm
+  - action: utter_weight_loss
+  - intent: deny
+  - action: utter_moderate_risk
+  - intent: goodbye
+  - action: utter_goodbye
+
+# [0101] - (MODERATE RISK)
+- story: Diagnosis
+  steps:
+  - intent: diabetes_diagnosis
+  - action: utter_diabetes_diagnosis
+  - action: utter_get_age_group
+  - intent: deny
+  - action: utter_get_bmi
+  - intent: affirm
+  - action: utter_get_symptoms
+  - intent: deny
+  - action: utter_weight_loss
+  - intent: affirm
+  - action: utter_moderate_risk
+  - intent: goodbye
+  - action: utter_goodbye
+
+# [1101] - (MODERATE RISK)
+- story: Diagnosis
+  steps:
+  - intent: diabetes_diagnosis
+  - action: utter_diabetes_diagnosis
+  - action: utter_get_age_group
+  - intent: affirm
+  - action: utter_get_bmi
+  - intent: affirm
+  - action: utter_get_symptoms
+  - intent: deny
+  - action: utter_weight_loss
+  - intent: affirm
+  - action: utter_moderate_risk
+  - intent: goodbye
+  - action: utter_goodbye
+
+
+# [0000] - (LOW RISK)
+- story: Diagnosis
+  steps:
+  - intent: diabetes_diagnosis
+  - action: utter_diabetes_diagnosis
+  - action: utter_get_age_group
+  - intent: deny
+  - action: utter_get_bmi
+  - intent: deny
+  - action: utter_get_symptoms
+  - intent: deny
+  - action: utter_weight_loss
+  - intent: deny
+  - action: utter_low_risk
+  - intent: goodbye
+  - action: utter_goodbye
+
+
+# [0001] - (LOW RISK)
+- story: Diagnosis
+  steps:
+ 
+  - intent: diabetes_diagnosis
+  - action: utter_diabetes_diagnosis
+  - action: utter_get_age_group
+  - intent: deny
+  - action: utter_get_bmi
+  - intent: deny
+  - action: utter_get_symptoms
+  - intent: deny
+  - action: utter_weight_loss
+  - intent: affirm
+  - action: utter_low_risk
+  - intent: goodbye
+  - action: utter_goodbye
+
+
+# [1000] - (LOW RISK)
+- story: Diagnosis
+  steps:
+  - intent: diabetes_diagnosis
+  - action: utter_diabetes_diagnosis
+  - action: utter_get_age_group
+  - intent: affirm
+  - action: utter_get_bmi
+  - intent: deny
+  - action: utter_get_symptoms
+  - intent: deny
+  - action: utter_weight_loss
+  - intent: deny
+  - action: utter_low_risk
+  - intent: goodbye
+  - action: utter_goodbye
+
+
+  # [0100] - (LOW RISK)
+- story: Diagnosis
+  steps:
+  - intent: diabetes_diagnosis
+  - action: utter_diabetes_diagnosis
+  - action: utter_get_age_group
+  - intent: deny
+  - action: utter_get_bmi
+  - intent: affirm
+  - action: utter_get_symptoms
+  - intent: deny
+  - action: utter_weight_loss
+  - intent: deny
+  - action: utter_low_risk
+  - intent: goodbye
+  - action: utter_goodbye
+
+
+  # [1100] - (LOW RISK)
+- story: Diagnosis
+  steps:
+  - intent: diabetes_diagnosis
+  - action: utter_diabetes_diagnosis
+  - action: utter_get_age_group
+  - intent: affirm
+  - action: utter_get_bmi
+  - intent: affirm
+  - action: utter_get_symptoms
+  - intent: deny
+  - action: utter_weight_loss
+  - intent: deny
+  - action: utter_low_risk
+  - intent: goodbye
+  - action: utter_goodbye
+
+
+
+  # [1001] - (LOW RISK)
+- story: Diagnosis
+  steps:
+  - intent: diabetes_diagnosis
+  - action: utter_diabetes_diagnosis
+  - action: utter_get_age_group
+  - intent: affirm
+  - action: utter_get_bmi
+  - intent: deny
+  - action: utter_get_symptoms
+  - intent: deny
+  - action: utter_weight_loss
+  - intent: affirm
+  - action: utter_low_risk
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: Diabetes
+  steps:
+  - intent: diabetes
+  - action: utter_diabetes
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: Diabetes_symptoms
+  steps:
+  - intent: diabetes_symptoms
+  - action: utter_diabetes_symptoms
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: Diabetes_symptoms_in_man
+  steps:
+  - intent: diabetes_symptoms_in_man
+  - action: utter_diabetes_symptoms_in_man
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: Diabetes_symptoms_in_woman
+  steps:
+  - intent: diabetes_symptoms_in_woman
+  - action: utter_diabetes_symptoms_in_woman
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: Type1_Diabetes_symptoms
+  steps:
+  - intent: type1_diabetes_symptoms
+  - action: utter_type1_diabetes_symptoms
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: Type2_Diabetes_symptoms
+  steps:
+  - intent: type2_diabetes_symptoms
+  - action: utter_type2_diabetes_symptoms
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: Diabetes_types
+  steps:
+  - intent: diabetes_types
+  - action: utter_diabetes_types
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: Diabetes_Causes
+  steps:
+  - intent: causes_of_diabetes
+  - action: utter_diabetes_causes
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: Diabetes_Risk_Factors
+  steps:
+  - intent: diabetes_risk_factors
+  - action: utter_diabetes_risk_factors
+  - intent: goodbye
+  - action: utter_goodbye
+
+

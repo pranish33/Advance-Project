@@ -1,0 +1,284 @@
+version: "2.0"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+
+- intent: goodbye
+  examples: |
+    - good bye
+    - bye
+    - see you
+    - good night
+    - goodbye
+    - have a nice day
+    - exit
+
+- intent: affirm
+  examples: |
+    - yes
+    - s
+    - ok
+    - okay
+    - indeed
+    - of course
+    - yaa
+    - yeah
+    - y
+    - correct
+
+- intent: deny
+  examples: |
+    - no
+    - never
+    - n
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+    - nope
+
+- intent: day
+  examples: |
+    - less than 24 hours
+    - more than 24 hours
+    - less
+    - more
+    - l
+    - m
+
+- intent: head_symptom
+  examples: |
+    - headache
+    - pain in head
+    - head ache
+    - head
+    - h
+    - i have headache 
+    - i have headche what should i do
+
+- intent: head_whole
+  examples: |
+    - whole
+    - w
+    - hole
+    - all
+
+- intent: head_sides
+  examples: |
+    - sides
+    - side
+    - s
+
+- intent: head_crown
+  examples: |
+    - crown
+    - crowns
+    - c
+
+- intent: head_eyes
+  examples: |
+    - eyes
+    - eye
+    - e
+
+- intent: flu_symptom
+  examples: |
+    - flu
+    - cough
+    - cold
+    - fever
+    - f
+    - runny rose
+    - vomitting
+    - body ache
+
+- intent: vision_symptom
+  examples: |
+    - vision
+    - v
+    - blur
+- intent: stomach_symptom
+  examples: |
+    - stomachache
+    - pain in stomach
+    - stomach ache
+    - stomach
+    - i have stomach ache
+    - i have stomachache what should i do 
+    
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+
+- intent: diabetes_diagnosis
+  examples: |
+    - diagnosis
+    - diagnose
+    - Diagnosis
+    - diag
+    - dig
+    - diabetes diagnosis
+    - diabt diag
+
+- intent: diabetes_symptoms
+  examples: |
+    - symptom
+    - sign
+    - symptoms
+    - what are the sign and symptoms
+    - what are the sign
+    - what are the sign
+    - what are the symptoms of diabetes
+    - symptoms of diabetes
+    - sign of diabetes
+    - diabetes symptoms
+    - diabet symp
+    - symps of diabetes
+
+- intent: diabetes_types
+  examples: |
+
+    - type
+    - types
+    - what are the types of diabetes
+    - diabetes types
+    - how many types of symptoms are there in diabetes
+    - types of diabe
+    - dia typ
+    - typ 
+    - typs
+
+- intent: type1_diabetes_symptoms
+  examples: |
+
+    - type 1 symptom
+    - type 1 sign
+    - symptoms of type 1
+    - what are the sign and symptoms of type 1 diabetes
+    - what are the sign of type 1
+    - what are the sign of type 1
+    - type1
+    - typ1
+    - typ 1
+    - type 1 diabetes
+    - typ 1 diab
+
+
+- intent: type2_diabetes_symptoms
+  examples: |
+
+    - type 2 symptom
+    - type 2 sign
+    - symptoms of type 2
+    - what are the sign and symptoms of type 2 diabetes
+    - what are the sign of type 2
+    - what are the sign of type 2
+    - type2 symptoms
+    - typ2 symps
+    - typ 2 smptoms
+    - type 2 diabetes symptoms
+    - typ 2 diab symspp
+
+- intent: diabetes
+  examples: |
+    - diab
+    - betes
+    - diabetes
+    - explain diabetes
+    - Tell me about diabetes
+    - what is  diabetes
+    - db
+    - dibt
+
+- intent: welcome
+  examples: |
+
+    - It's my pleasure
+    - you are welcome
+    - Take Care
+    - great
+    - great keep it up 
+    
+- intent: diabetes_symptoms_in_man
+  examples: |
+
+    - symptoms in man
+    - sign in man
+    - symptom man
+    - what are the sign and symptoms in man
+    - what are the sign in man
+    - what are the sign man 
+    - explain diabetes symptoms in man
+
+- intent: diabetes_symptoms_in_woman
+  examples: |
+
+    - symptoms in woman
+    - sign in woman
+    - symptom man
+    - what are the sign and symptoms in woman
+    - what are the sign in woman
+    - what are the sign woman 
+    - diabe in women
+    - diabetes symptoms in woman
+
+- intent: causes_of_diabetes
+  examples: |
+
+    - causes
+    - diabetes causes
+    - diabetes of causes
+    - cause of diabetes
+    - what causes diabetes
+    - what are the causes of diabetes
+    - how diabetes is causes
+
+- intent: diabetes_risk_factors
+  examples: |
+
+    - diabetes risk factor
+    - diabetes factors
+    - waht are the risk
+    - risk
+    - factors
+    - risk factors
+    - what are the risk factors of diabetes
+    - ris fac
+    - factors of diabetes
+
+
+- intent: thank_you
+  examples: |
+    - thank you
+    - thanks
+    - thnx
+    - thank you very much
+    - great
+    - awesome
+    - wow
+
+
+- intent: Askquestion
+  examples: |
+    - ask question
+    - askquestion
+    - question
+    - i have a question
+    - ask
+     
