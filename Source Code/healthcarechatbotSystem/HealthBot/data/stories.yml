@@ -1,6 +1,11 @@
-version: "2.0"
+version: "3.1"
 
 stories:
+
+- story: Replying welcome
+  steps:
+  - intent: welcome
+  - action: utter_welcome
 
 - story: user greet
   steps:

@@ -137,8 +137,9 @@ def updatepassword(request):
 def adminaddDoctor(request):
     error = ""
     user = "none"
-    if not request.user.is_staff:
-        return redirect('login_admin')
+
+    # if not request.user.is_staff:
+    #     return redirect('login_admin')
 
     if request.method == 'POST':
         name = request.POST['name']
@@ -173,8 +174,8 @@ def adminaddDoctor(request):
 
 # admin can view added doctors
 def adminviewDoctor(request):
-    if not request.user.is_staff:
-        return redirect('login_admin')
+    # if not request.user.is_staff:
+    #     return redirect('login_admin')
     doc = Doctor.objects.all()
     d = {'doc': doc}
     return render(request, 'adminviewDoctors.html', d)
@@ -182,8 +183,8 @@ def adminviewDoctor(request):
 
 # admin can delete doctor
 def admin_delete_doctor(request, pid, email):
-    if not request.user.is_staff:
-        return redirect('login_admin')
+    # if not request.user.is_staff:
+    #     return redirect('login_admin')
     doctor = Doctor.objects.get(id=pid)
     doctor.delete()
     users = User.objects.filter(username=email)
@@ -202,8 +203,8 @@ def patient_delete_appointment(request, pid):
 
 # admin can view appointment
 def adminviewAppointment(request):
-    if not request.user.is_staff:
-        return redirect('login_admin')
+    # if not request.user.is_staff:
+    #     return redirect('login_admin')
     upcomming_appointments = Appointment.objects.filter(appointmentdate__gte=timezone.now(), status=True).order_by(
         'appointmentdate')
     # print("Upcomming Appointment",upcomming_appointments)

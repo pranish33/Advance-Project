@@ -1,4 +1,4 @@
-version: "3.0"
+version: "3.1"
 
 intents:
   - greet
@@ -16,6 +16,8 @@ intents:
   - stomach_symptom
   - bot_challenge
   - thank_you
+  - Askquestion
+  - welcome
   - diabetes_diagnosis:
       use_entities: true
   - diabetes
@@ -34,7 +36,7 @@ responses:
   utter_greet:
   - text: |2-
       Hello!
-      This is your *MeroCare Health Carebot*, here to help you. :')
+      This is your *HealthCare Chatbot*, here to help you. :')
        So, How may I help you? Are you facing any of these problems:
        * Headache
        * Stomache
@@ -197,9 +199,9 @@ responses:
         2. Drink lemon and salt water 
         3. Eat pomegranate
   utter_iamabot:
-  - text: "I am your's personal health care bot, powered by MeroCare."
+  - text: "I am your's personal healthcare bot, powered by HealthCare."
   utter_diabetes:
-  - text: Diabetes is a metabolic disorder that occurs when your blood sugar (glucose), is too high. [Know More about diabetes] (https://www.mayoclinic.org/diseases-conditions/diabetes/symptoms-causes/syc-20371444)
+  - text: Diabetes is a metabolic disorder that occurs when your blood sugar (glucose), is too high. [Know More about diabetes] (https://www.mayoclinic.org/diseases-conditions/diabetes/symptoms-causes/syc-20371444). 
   - text: Diabetes is a condition that impairs the body's ability to process blood glucose, otherwise known as blood sugar. [Know More about diabetes] (https://www.mayoclinic.org/diseases-conditions/diabetes/symptoms-causes/syc-20371444)
   - text: Diabetes mellitus refers to a group of diseases that affect how your body uses blood sugar (glucose). [Know More about diabetes] (https://www.mayoclinic.org/diseases-conditions/diabetes/symptoms-causes/syc-20371444)
 
@@ -364,7 +366,7 @@ responses:
 
        However, as this condition can come on slowly, and many of the symptoms may go unnoticed, make sure to raise any concerns with your General Physician.
 
-  
+
 actions: []
 forms: {}
 e2e_actions: []

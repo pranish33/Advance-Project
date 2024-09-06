@@ -19,18 +19,18 @@
     <script src="{% static 'js/Chatroom.min.js' %}"></script>
     <script type="text/javascript">
         var chatroom = new window.Chatroom({
-            host: "http://localhost:5005/webhooks/rest/webhook",
+            host: "http://localhost:5005",
             title: "Personal Health Assistant!",
             container: document.querySelector(".chat-container"),
             welcomeMessage: "Hi! I' m Your Health Personal Assistant. To get Started, simply ask me a question. I am still Learning, so If i Can't Help you, I will direct you to additional resources. ",
-            speechRecognition: "en-US",
-            /*voiceLang: "en-US" */
+            /*speechRecognition: "en-US",
+            voiceLang: "en-US" */
         });
         chatroom.openChat();
     </script>
 </body>
 <div class="footer text-center text-white">
-    Copyright &copy; 2024 &mdash; Health Care
+    Copyright &copy; 2024 &mdash; HealthCare
 </div>
 </html>
 {% endblock %}

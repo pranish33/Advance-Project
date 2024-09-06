@@ -1,4 +1,4 @@
-version: "2.0"
+version: "3.1"
 
 nlu:
 - intent: greet
@@ -55,7 +55,9 @@ nlu:
     - less than 24 hours
     - more than 24 hours
     - less
+    - less than 24
     - more
+    - more than 24
     - l
     - m
 
@@ -80,7 +82,6 @@ nlu:
   examples: |
     - sides
     - side
-    - s
 
 - intent: head_crown
   examples: |
@@ -110,6 +111,7 @@ nlu:
     - vision
     - v
     - blur
+
 - intent: stomach_symptom
   examples: |
     - stomachache
@@ -153,7 +155,6 @@ nlu:
 
 - intent: diabetes_types
   examples: |
-
     - type
     - types
     - what are the types of diabetes
@@ -166,7 +167,6 @@ nlu:
 
 - intent: type1_diabetes_symptoms
   examples: |
-
     - type 1 symptom
     - type 1 sign
     - symptoms of type 1
@@ -182,7 +182,6 @@ nlu:
 
 - intent: type2_diabetes_symptoms
   examples: |
-
     - type 2 symptom
     - type 2 sign
     - symptoms of type 2
@@ -192,6 +191,7 @@ nlu:
     - type2 symptoms
     - typ2 symps
     - typ 2 smptoms
+    - type 2 diabetes
     - type 2 diabetes symptoms
     - typ 2 diab symspp
 
@@ -208,16 +208,14 @@ nlu:
 
 - intent: welcome
   examples: |
-
     - It's my pleasure
     - you are welcome
     - Take Care
     - great
     - great keep it up 
-    
+
 - intent: diabetes_symptoms_in_man
   examples: |
-
     - symptoms in man
     - sign in man
     - symptom man
@@ -228,10 +226,9 @@ nlu:
 
 - intent: diabetes_symptoms_in_woman
   examples: |
-
     - symptoms in woman
     - sign in woman
-    - symptom man
+    - symptom woman
     - what are the sign and symptoms in woman
     - what are the sign in woman
     - what are the sign woman 
@@ -240,7 +237,6 @@ nlu:
 
 - intent: causes_of_diabetes
   examples: |
-
     - causes
     - diabetes causes
     - diabetes of causes
@@ -251,7 +247,6 @@ nlu:
 
 - intent: diabetes_risk_factors
   examples: |
-
     - diabetes risk factor
     - diabetes factors
     - waht are the risk
@@ -262,17 +257,14 @@ nlu:
     - ris fac
     - factors of diabetes
 
-
 - intent: thank_you
   examples: |
     - thank you
     - thanks
     - thnx
     - thank you very much
-    - great
     - awesome
     - wow
-
 
 - intent: Askquestion
   examples: |
@@ -281,4 +273,5 @@ nlu:
     - question
     - i have a question
     - ask
-     
+
+
