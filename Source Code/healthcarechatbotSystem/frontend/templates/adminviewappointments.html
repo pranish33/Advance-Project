@@ -18,7 +18,7 @@
                     <ul class = "collapsible popout text-center" data-collapsible = "accordion">
                         <li class="card">
                             <div class = "card-header collapsible-header">
-                                <h5 style="color:blue;"><a><i class="fa fa-calendar-check-o"></i>  {{ i.patientname }} appointment with {{ i.doctorname }} on {{i.appointmentdate}}</a></h5>
+                                <h5 style="color:blue;"><a><i class="fa fa-calendar-check-o"></i>  {{ i.patientname }} appointment with {{ i.doctorname }} on {{i.appointmentdate}} at {{i.appointment_time}}</a></h5>
                             </div>
                             <div class = "card-body collapsible-body">
                                 <table align="center" class="card-text" style="font-size: 19px;">
@@ -34,6 +34,12 @@
                                         <td>Appointment Date:</td>
                                         <td>{{i.appointmentdate}}</td>
                                     </tr>
+
+                                    <tr>
+                                        <td>Appointment Time:</td>
+                                        <td>{{i.appointment_time}}</td>
+                                    </tr>
+                                    
                                    
                                     <tr>
                                         <td>Symptoms:</td>
@@ -51,7 +57,7 @@
                     <ul class = "collapsible popout text-center" data-collapsible = "accordion">
                         <li class="card">
                             <div class = "card-header collapsible-header">
-                                <h5 style="color:blue;"><a><i class="fa fa-calendar-check-o"></i>  {{ j.patientname }} appointment with {{ j.doctorname }} on {{j.appointmentdate}}</a></h5>
+                                <h5 style="color:blue;"><a><i class="fa fa-calendar-check-o"></i>  {{ j.patientname }} appointment with {{ j.doctorname }} on {{j.appointmentdate}} at {{j.appointment_time}}</a></h5>
                             </div>
                             <div class = "card-body collapsible-body">
                                 <table align="center" class="card-text" style="font-size: 19px;">
@@ -66,6 +72,11 @@
                                     <tr>
                                         <td>Appointment Date:</td>
                                         <td>{{j.appointmentdate}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Appointment Time:</td>
+                                        <td>{{j.appointment_time}}</td>
                                     </tr>
                                     
                                     <tr>

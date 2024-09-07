@@ -21,7 +21,20 @@
                 <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'homepage' %}">HOME</a></li>
                 <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'aboutpage' %}">ABOUT</a></li>
 
-                <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'loginpage' %}">ACCOUNT</a></li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" href="{% url 'home' %}">
+                            Welcome, {{ user.first_name }}!
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" href="{% url 'logout' %}">LOGOUT</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" href="{% url 'loginpage' %}">ACCOUNT</a>
+                    </li>
+                {% endif %}
 
                 <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'chatroom' %}">CHATROOM</a></li>
             </ul>

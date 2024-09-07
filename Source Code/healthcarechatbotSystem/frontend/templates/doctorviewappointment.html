@@ -15,12 +15,12 @@
                 <h2 class="text-center text-light">YOU HAVE APPOINTMENTS WITH:</h2>
                 <div class="text-center" role="tablist" id="accordion-1">
                     {% for i in upcomming_appointments %}
-                    <ul class = "collapsible popout text-center" data-collapsible = "accordion">
+                    <ul class="collapsible popout text-center" data-collapsible="accordion">
                         <li class="card">
-                            <div class = "card-header collapsible-header">
-                                <h5 style="color:green;"><a><i class="fa fa-calendar-check-o"></i>  {{ i.patientname }} appointment with {{ i.doctorname }} on {{i.appointmentdate}}</a></h5>
+                            <div class="card-header collapsible-header">
+                                <h5 style="color:green;"><a><i class="fa fa-calendar-check-o"></i> Appointment for {{ i.patientname }} on {{i.appointmentdate}} at {{i.appointment_time}}</a></h5>
                             </div>
-                            <div class = "card-body collapsible-body">
+                            <div class="card-body collapsible-body">
                                 <table align="center" class="card-text" style="font-size: 18px;">
                                     <tr>
                                         <td>Doctor Name:</td>
@@ -34,6 +34,11 @@
                                         <td>Appointment Date:</td>
                                         <td>{{i.appointmentdate}}</td>
                                     </tr>
+
+                                    <tr></tr>
+                                        <td>Appointment Time:</td>
+                                        <td>{{i.appointment_time}}</td>
+                                    </tr>
                                     
                                     <tr>
                                         <td>Symptoms:</td>
@@ -41,30 +46,23 @@
                                     </tr> 
                                     <tr>
                                         <td>Prescription:</td>
-
-                                        <form method="post">
+                                        <form method="post" onsubmit="return validateForm(this)">
                                             <td>
                                                 {% csrf_token %}
                                                 <div class="form-group">
-                                                    
-                                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="prescription"></textarea>
+                                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="prescription" required></textarea>
                                                 </div>
-                                                
+                                                <tr>
+                                                    <td>Follow Up Date After:</td>
+                                                    <td>
+                                                        <input type="date" name="followupdate" id="followupdate_{{ i.id }}" data-appointment-date="{{ i.appointmentdate }}" />
+                                                    </td>
                                                 </tr>
-                                    <tr>
-                                        <td>Follow Up Date</td>
-                                        <td>
-                                            
-                                            <input type="date" name="followupdate">
-</div>
-                                        </td>
-                                    </tr>
-                                                </div>
                                                 <input type="hidden" value="{{i.id}}" name="idofappointment">
-                                            </td>
-                                            <tr>
-                                            <td>
-                                            <input type="submit" class="btn btn-danger" value="Add Prescription">
+                                                <tr>
+                                                    <td>
+                                                        <input type="submit" class="btn btn-danger" value="Add Prescription">
+                                                    </td>
                                                 </tr>
                                             </td>
                                         </form>
@@ -75,15 +73,15 @@
                     </ul>
                     {% endfor %}
                 </div>
-                <h2 class="text-center text-light">PREVIOUS APPIONTMENTS</h2>
+                <h2 class="text-center text-light">PREVIOUS APPOINTMENTS</h2>
                 <div class="text-center" role="tablist" id="accordion-2">
                     {% for j in previous_appointments %}
-                    <ul class = "collapsible popout text-center" data-collapsible = "accordion">
+                    <ul class="collapsible popout text-center" data-collapsible="accordion">
                         <li class="card">
-                            <div class = "card-header collapsible-header">
-                                <h5 style="color:blue;"><a><i class="fa fa-calendar-check-o"></i>  {{ j.patientname }} appointment with {{ j.doctorname }} on {{j.appointmentdate}}</a></h5>
+                            <div class="card-header collapsible-header">
+                                <h5 style="color:blue;"><a><i class="fa fa-calendar-check-o"></i>Appointment for {{ j.patientname }} on {{j.appointmentdate}} at {{j.appointment_time}}</a></h5>
                             </div>
-                            <div class = "card-body collapsible-body">
+                            <div class="card-body collapsible-body">
                                 <table align="center" class="card-text" style="font-size: 19px;">
                                     <tr>
                                         <td>Doctor Name:</td>
@@ -97,17 +95,20 @@
                                         <td>Appointment Date:</td>
                                         <td>{{j.appointmentdate}}</td>
                                     </tr>
-                                   
+                                    <tr></tr>
+                                        <td>Appointment Time:</td>
+                                        <td>{{j.appointment_time}}</td>
+                                    </tr>
                                     <tr>
                                         <td>Symptoms:</td>
                                         <td>{{j.symptoms}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Prescription</td>
+                                        <td>Prescription:</td>
                                         <td>{{j.prescription}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Next Visit Date</td>
+                                        <td>Next Visit Date After:</td>
                                         <td>{{j.followupdate}}</td>
                                     </tr>
                                 </table>
@@ -120,12 +121,37 @@
         </div>
     </div>
     <div class="scroll-top-wrapper"><span class="scroll-top-inner"><i class="fa fa-arrow-circle-up"></i></span></div>
-<script src="{% static 'js/jquery.min.js' %}"></script>
-<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-<script src="{% static 'js/back-to-top-scroll.js' %}"></script>
-<script src="{% static 'js/Bold-BS4-Animated-Back-To-Top.js' %}"></script>
-<script src="{% static 'js/bs-init.js' %}"></script>
-<script src="{% static 'js/Sidebar-Menu.js' %}"></script>
+
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <!-- Bootstrap JS -->
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'js/back-to-top-scroll.js' %}"></script>
+    <script src="{% static 'js/Bold-BS4-Animated-Back-To-Top.js' %}"></script>
+    <script src="{% static 'js/bs-init.js' %}"></script>
+    <script src="{% static 'js/Sidebar-Menu.js' %}"></script>
+
+    <script>
+        // Function to set the minimum date for the follow-up date field
+        function setFollowUpMinDate() {
+            const appointments = document.querySelectorAll('input[name="followupdate"]');
+            appointments.forEach(function (input) {
+                // Extract the appointment date from the data attribute
+                const appointmentDate = new Date(input.dataset.appointmentDate);
+                // Add 1 day to appointment date for minimum follow-up date
+                appointmentDate.setDate(appointmentDate.getDate() + 2);
+    
+                // Format date to YYYY-MM-DD
+                const minDate = appointmentDate.toISOString().split('T')[0];
+                input.setAttribute('min', minDate); // Set the min attribute in YYYY-MM-DD format
+            });
+        }
+    
+        // Run the function on page load
+        document.addEventListener('DOMContentLoaded', setFollowUpMinDate);
+    </script>
+    
 </body>
 
 </html>

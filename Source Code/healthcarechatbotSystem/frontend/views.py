@@ -5,6 +5,10 @@ from django.contrib.auth import authenticate, logout, login, update_session_auth
 from django.contrib.auth.forms import PasswordChangeForm
 from django.utils import timezone
 from django.contrib import messages
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET
+from .models import Appointment
+from datetime import datetime, time
 
 
 # Create your views here.
@@ -12,10 +16,11 @@ from django.contrib import messages
 def homepage(request):
     return render(request, 'index.html')
 
+def patienthome(request):
+    return render(request, 'patienthome.html')
 
 def aboutpage(request):
     return render(request, 'about.html')
-
 
 # loginpage for different group user such as admin, doctor and patients
 import logging
@@ -34,7 +39,7 @@ def loginpage(request):
             
             # Check if the user is part of any groups
             user_groups = user.groups.all()
-            logging.debug(f'User {user.username} groups: {user_groups}')
+
             if user_groups.exists():
                 # Safely get the group name
                 g = user_groups[0].name
@@ -149,13 +154,13 @@ def adminaddDoctor(request):
         gender = request.POST['gender']
         phonenumber = request.POST['phonenumber']
         address = request.POST['address']
-        nmcnumber = request.POST['nmcnumber']
+        licenseNo = request.POST['licenseNo']
         specialization = request.POST['specialization']
 
         try:
             if password == repeatpassword:
                 Doctor.objects.create(name=name, email=email, gender=gender, phonenumber=phonenumber, address=address,
-                                      nmcnumber=nmcnumber, specialization=specialization)
+                                      licenseNo=licenseNo, specialization=specialization)
                 user = User.objects.create_user(first_name=name, email=email, password=password, username=email)
                 doc_group = Group.objects.get(name='Doctor')
                 doc_group.user_set.add(user)
@@ -205,11 +210,10 @@ def patient_delete_appointment(request, pid):
 def adminviewAppointment(request):
     # if not request.user.is_staff:
     #     return redirect('login_admin')
-    upcomming_appointments = Appointment.objects.filter(appointmentdate__gte=timezone.now(), status=True).order_by(
-        'appointmentdate')
+    upcomming_appointments = Appointment.objects.filter(appointmentdate__gte=timezone.now(), status=True).order_by('appointmentdate', 'appointment_time') 
     # print("Upcomming Appointment",upcomming_appointments)
     previous_appointments = Appointment.objects.filter(appointmentdate__lt=timezone.now()).order_by(
-        '-appointmentdate') | Appointment.objects.filter(status=False).order_by('-appointmentdate')
+        '-appointmentdate') | Appointment.objects.filter(status=False).order_by('-appointmentdate', '-appointment_time')
     # print("Previous Appointment",previous_appointments)
     d = {"upcomming_appointments": upcomming_appointments, "previous_appointments": previous_appointments}
     return render(request, 'adminviewappointments.html', d)
@@ -232,9 +236,10 @@ def Logout_admin(request):
 
 
 def AdminHome(request):
-    # after login user comes to this page.
-    if not request.user.is_staff:
-        return redirect('loginpage')
+    # Check if the user is authenticated and has staff status
+    if not request.user.is_authenticated or not request.user.is_staff:
+        return redirect('loginpage')  # Redirect to login page if not authorized
+    # Render the admin home page if the user is authorized
     return render(request, 'adminhome.html')
 
 
@@ -284,11 +289,12 @@ def MakeAppointments(request):
             patientname = request.POST['patientname']
             patientemail = request.POST['patientemail']
             appointmentdate = request.POST['appointmentdate']
+            appointment_time = request.POST['timeslot']
             symptoms = request.POST['symptoms']
             try:
                 Appointment.objects.create(doctorname=doctorname, doctoremail=doctoremail, patientname=patientname,
                                            patientemail=patientemail, appointmentdate=appointmentdate,
-                                           symptoms=symptoms, status=True, prescription="")
+                                           symptoms=symptoms, status=True, appointment_time=appointment_time, prescription="")
                 error = "no"
                 messages.info(request, 'Appointment Booked Successfully!!')
                 return redirect('makeappointments')
@@ -309,13 +315,11 @@ def viewappointments(request):
     g = request.user.groups.all()[0].name
     if g == 'Patient':
         upcomming_appointments = Appointment.objects.filter(patientemail=request.user,
-                                                            appointmentdate__gte=timezone.now(), status=True).order_by(
-            'appointmentdate')
+                                                            appointmentdate__gte=timezone.now(), status=True).order_by('appointmentdate', 'appointment_time') 
 
         previous_appointments = Appointment.objects.filter(patientemail=request.user,
                                                            appointmentdate__lt=timezone.now()).order_by(
-            '-appointmentdate') | Appointment.objects.filter(patientemail=request.user, status=False).order_by(
-            '-appointmentdate')
+            '-appointmentdate') | Appointment.objects.filter(patientemail=request.user, status=False).order_by('-appointmentdate', '-appointment_time')
 
         d = {"upcomming_appointments": upcomming_appointments, "previous_appointments": previous_appointments}
         return render(request, 'patientviewappointments.html', d)
@@ -324,17 +328,16 @@ def viewappointments(request):
             prescriptiondata = request.POST['prescription']
             followupdata = request.POST['followupdate']
             idvalue = request.POST['idofappointment']
+        
             Appointment.objects.filter(id=idvalue).update(prescription=prescriptiondata, followupdate=followupdata,
                                                           status=False)
 
         upcomming_appointments = Appointment.objects.filter(doctoremail=request.user,
-                                                            appointmentdate__gte=timezone.now(), status=True).order_by(
-            'appointmentdate')
+                                                            appointmentdate__gte=timezone.now(), status=True).order_by('appointmentdate', 'appointment_time') 
 
         previous_appointments = Appointment.objects.filter(doctoremail=request.user,
                                                            appointmentdate__lt=timezone.now()).order_by(
-            '-appointmentdate') | Appointment.objects.filter(doctoremail=request.user, status=False).order_by(
-            '-appointmentdate')
+            '-appointmentdate') | Appointment.objects.filter(doctoremail=request.user, status=False).order_by('-appointmentdate', '-appointment_time')
 
         d = {"upcomming_appointments": upcomming_appointments, "previous_appointments": previous_appointments}
         return render(request, 'doctorviewappointment.html', d)
@@ -388,3 +391,43 @@ def contactus(request):
         messages.info(request, 'Your Messages has been recorded. We will Contact you soon!!')
 
     return render(request, 'contactus.html')
+
+
+from django.http import JsonResponse
+from .models import Appointment
+from datetime import datetime
+
+@require_GET
+def get_available_time_slots(request):
+    date = request.GET.get('date')
+    doctor_email = request.GET.get('doctor_email')  # Ensure this matches the query parameter name in JS
+    
+    # Fixed time slots
+    time_slots = [
+        '10:00', '10:30', '11:00', '11:30',
+        '12:00', '12:30', '13:00', '13:30'
+    ]
+    
+    # Convert fixed time slots to datetime.time objects
+    def parse_time(slot):
+        return datetime.strptime(slot, '%H:%M').time()
+    
+    time_slots = [parse_time(slot) for slot in time_slots]
+    
+    # Get already booked time slots for the given date and doctor email
+    booked_slots = Appointment.objects.filter(
+        appointmentdate=date,
+        doctoremail=doctor_email
+    ).values_list('appointment_time', flat=True)
+    
+    
+    # Convert booked slots to datetime.time objects
+    booked_slots = [parse_time(slot.strftime('%H:%M')) for slot in booked_slots]
+
+    # Filter out booked slots
+    available_slots = [slot.strftime('%H:%M') for slot in time_slots if slot not in booked_slots]
+    
+    return JsonResponse({'timeSlots': available_slots})
+
+
+

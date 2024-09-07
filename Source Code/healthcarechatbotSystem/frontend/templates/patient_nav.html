@@ -20,7 +20,7 @@
             <div class="media d-flex align-items-center">
                 <img loading="lazy" src="{% static 'img/mainicon.jfif' %}" alt="..." width="80" height="80" class="mr-3 rounded-circle img-thumbnail shadow-sm">
                 <div class="media-body">
-                    <h4 class="m-0">{{ user.first_name }}</h4>
+                    <h4 class="m-0">Hello {{ user.first_name }}</h4>
 
                 </div>
             </div>
@@ -57,6 +57,12 @@
                 <a href="{% url 'viewhealthrecords' %}" class="nav-link text-dark">
                     <i class="fa fa-file mr-3 text-primary fa-fw"></i>
                     View Health Records
+                </a>
+            </li>
+            <li class="nav-item"></li>
+                <a href="{% url 'chatroom' %}" class="nav-link text-dark">
+                    <i class="fa fa-comments mr-3 text-primary fa-fw"></i>
+                    Chatroom
                 </a>
             </li>
             <li class="nav-item">

@@ -18,11 +18,22 @@
 
     <script src="{% static 'js/Chatroom.min.js' %}"></script>
     <script type="text/javascript">
+
+        var username = "{% if user.is_authenticated %}{{ user.first_name }}{% endif %}";
+    
+        var welcomeMessage = "";
+        if (username) {
+            welcomeMessage = "Hi " + username + "! ";
+        }else{
+            welcomeMessage = "Hi!"
+        }
+        welcomeMessage += " I'm Your Health Personal Assistant. To get started, simply ask me a question. I am still learning, so if I can't help you, I will direct you to additional resources.";
+        
         var chatroom = new window.Chatroom({
             host: "http://localhost:5005",
             title: "Personal Health Assistant!",
             container: document.querySelector(".chat-container"),
-            welcomeMessage: "Hi! I' m Your Health Personal Assistant. To get Started, simply ask me a question. I am still Learning, so If i Can't Help you, I will direct you to additional resources. ",
+            welcomeMessage: welcomeMessage,
             /*speechRecognition: "en-US",
             voiceLang: "en-US" */
         });

@@ -4,87 +4,258 @@
 <head>
     {% include 'include.html' %}
     {% load static %}
+    <style>
+        .btn {
+            margin-top: 50px;
+            margin-left: 300px;
+            position: relative;
+            top: 120%;
+            transform: translateY(-50%);
+        }
+        .error-message {
+            color: red;
+            font-size: 0.875em;
+            margin-top: 0.5em;
+        }
+    </style>
 </head>
 
 <body>
-
-
-        {% include 'patient_nav.html' %}
+    {% include 'patient_nav.html' %}
     <div id="wrapper">
-        
         <div class="form-group row">
             <div class="col-md-8 offset-md-2">
                 <form class="custom-form" method="post">
                     {% csrf_token %}
-                    <h1 style="margin-top: 0px;" class="text-center text-white">Book Appointment</h1>
+                    <h1 class="text-center text-white">Book Appointment</h1>
                     <div class="form-row form-group my-4">
                         <div class="col-sm-4 label-column">
-                            <label class="col-form-label text-white" for="name-input-field">Doctor's Name & Field</label>
+                            <label class="col-form-label text-white" for="doctor-select">Doctor's Name & Field</label>
                         </div>
                         <div class="col-sm-6 input-column">
-                            <select class="form-control" name="doctoremail">
+                            <select id="doctor-select" class="form-control" name="doctoremail" onchange="updateDoctorName()">
+                                <option value="">Choose Doctor</option>
                                 {% for d in alldoctors %}
-                                <option value="{{d.email}}">{{d.name}}----->{{d.specialization}}</option>
+                                <option value="{{d.email}}" data-name="{{d.name}}">{{d.name}}----->{{d.specialization}}</option>
                                 {% endfor %}
+                            </select>
+                            <input type="hidden" id="doctorname" name="doctorname">
+                        </div>
+                    </div>
+                    <div class="form-row form-group">
+                        <div class="col-sm-4 label-column text-white">
+                            <label class="col-form-label" for="patientname">Name</label>
+                        </div>
+                        <div class="col-sm-6 input-column">
+                            <input id="patientname" class="form-control" type="text" value="{{user.first_name}}" name="patientname" readonly>
+                        </div>
+                    </div>
+                    <div class="form-row form-group">
+                        <div class="col-sm-4 label-column text-white">
+                            <label class="col-form-label" for="patientemail">Email</label>
+                        </div>
+                        <div class="col-sm-6 input-column">
+                            <input id="patientemail" class="form-control" type="text" value="{{user.username}}" name="patientemail" readonly>
+                        </div>
+                    </div>
+                    <div class="form-row form-group">
+                        <div class="col-sm-4 label-column text-white">
+                            <label class="col-form-label" for="appointmentdate">Appointment Date</label>
+                        </div>
+                        <div class="col-sm-6 input-column">
+                            <input id="appointmentdate" class="form-control" type="date" name="appointmentdate" required disabled>
+                            <div id="date-error" class="error-message"></div>
+                        </div>
+                    </div>
+                    <div class="form-row form-group">
+                        <div class="col-sm-4 label-column text-white">
+                            <label class="col-form-label" for="time-slot">Time Slot</label>
+                        </div>
+                        <div class="col-sm-6 input-column">
+                            <select id="time-slot" class="form-control" name="timeslot" required>
+                                <option value="">Select a time slot</option>
                             </select>
                         </div>
                     </div>
-                    {% for d in alldoctors %}
-                    <input type="hidden" value="{{d.name}}" name="doctorname">
-                    {% endfor %}
                     <div class="form-row form-group">
-                        <div class="col-sm-4 label-column text-white"><label class="col-form-label" for="pawssword-input-field">Name</label></div>
+                        <div class="col-sm-4 label-column text-white">
+                            <label class="col-form-label" for="symptoms">Symptoms</label>
+                        </div>
                         <div class="col-sm-6 input-column">
-                            <input class="form-control" type="text" value="{{user.first_name}}" name="patientname">
+                            <textarea id="symptoms" class="form-control" name="symptoms" placeholder="Describe your symptoms here..." required></textarea>
                         </div>
                     </div>
-                    <div class="form-row form-group">
-                        <div class="col-sm-4 label-column text-white"><label class="col-form-label" for="pawssword-input-field">Email</label></div>
-                        <div class="col-sm-6 input-column">
-                            <input class="form-control" type="text" value="{{user.username}}" name="patientemail">
-                        </div>
-                    </div>
-                    <div class="form-row form-group">
-                        <div class="col-sm-4 label-column text-white"><label class="col-form-label" for="repeat-pawssword-input-field">Appointment Date</label></div>
-                        <div class="col-sm-6 input-column">
-                            <input class="form-control" type="date" name="appointmentdate" id="date" required="">
-
-
-                        </div>
-                    </div>
-
-                    <div class="form-row form-group">
-                        <div class="col-sm-4 label-column text-white"><label class="col-form-label" for="repeat-pawssword-input-field">Symptoms</label></div>
-                        <div class="col-sm-6 input-column">
-                            <textarea class="form-control" name="symptoms" required=""></textarea>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary submit-button " type="submit">Book Appointment</button>
-                    <style>
-                        .btn {
-                            margin-top: 50px;
-                            margin-left: 300px;
-                            position: absolute;
-                            top: 120%;
-                            -ms-transform: translateY(-50%);
-                            transform: translateY(-50%);
-                         
-                            position: relative;
-                          
-                        }
-                    </style>
+                    <button class="btn btn-primary submit-button" type="submit">Book Appointment</button>
                     <div class="text-center">
                         {% for message in messages %}
                         <p>{{ message }}</p>
                         {% endfor %}
                     </div>
                 </form>
-
             </div>
         </div>
-        </div>
+    </div>
+    <script>
+        function handleDoctorChange() {
+            var select = document.getElementById('doctor-select');
+            var selectedOption = select.options[select.selectedIndex];
+            var doctorNameInput = document.getElementById('doctorname');
+            var dateInput = document.getElementById('appointmentdate');
+            var timeSlotSelect = document.getElementById('time-slot');
 
+            // Update doctor name input
+            if (selectedOption && selectedOption.value) {
+                var doctorName = selectedOption.getAttribute('data-name');
+                doctorNameInput.value = doctorName || '';
 
+                // Enable date input
+                dateInput.disabled = false;
+
+                // Fetch available time slots if date is selected
+                var date = dateInput.value;
+                if (date) {
+                    fetchAvailableTimeSlots(date, selectedOption.value);
+                } else {
+                    timeSlotSelect.innerHTML = '<option value="">Select a time slot</option>';
+                }
+            } else {
+                // Clear doctor name and disable date input if no doctor is selected
+                doctorNameInput.value = '';
+                dateInput.disabled = true;
+                dateInput.value = ''; // Clear the date field
+                timeSlotSelect.innerHTML = '<option value="">Select a time slot</option>';
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            var dateInput = document.getElementById('appointmentdate');
+            var timeSlotSelect = document.getElementById('time-slot');
+            var doctorSelect = document.getElementById('doctor-select');
+            var errorDiv = document.getElementById('date-error');
+    
+            if (doctorSelect) {
+                doctorSelect.addEventListener('change', updateDoctorName);
+            }
+
+            // Function to set the minimum selectable date
+            function setMinDate() {
+                var today = new Date();
+                // Increment the date by one day
+                today.setDate(today.getDate() + 1);
+                var minDate = today.toISOString().split('T')[0];
+                dateInput.setAttribute('min', minDate);
+            }
+            setMinDate(); // Set the minimum date on page load
+        
+            function fetchAvailableTimeSlots(date, doctorEmail) {
+                timeSlotSelect.innerHTML = '<option value="">Loading...</option>'; // Show loading state
+        
+                fetch(`/get-available-time-slots/?date=${date}&doctor_email=${doctorEmail}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            timeSlotSelect.innerHTML = '<option value="">Error loading time slots</option>';
+                        } else {
+                            if (data.timeSlots.length === 0) {
+                                // Clear the date input if no time slots are available
+                                dateInput.value = '';
+                                errorDiv.textContent = 'No available time slots for the selected date for the doctor.';
+                                timeSlotSelect.innerHTML = '<option value="">Select a time slot</option>';
+                            } else {
+                                timeSlotSelect.innerHTML = '<option value="">Select a time slot</option>';
+                                data.timeSlots.forEach(slot => {
+                                    var option = document.createElement('option');
+                                    option.value = slot;
+                                    option.textContent = slot;
+                                    timeSlotSelect.appendChild(option);
+                                });
+                                errorDiv.textContent = ''; // Clear any previous error messages
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        timeSlotSelect.innerHTML = '<option value="">Error loading time slots</option>';
+                        console.error('Error fetching time slots:', error); // Log the error to console
+                    });
+            }
+        
+            dateInput.addEventListener('input', function() {
+                var selectedDate = this.value;
+                var doctorEmail = doctorSelect.value;
+        
+                if (selectedDate) {
+                    var day = new Date(selectedDate).getDay();
+                    if (day === 0 || day === 6) { // 0 = Sunday, 6 = Saturday
+                        errorDiv.textContent = 'Please select a weekday.';
+                        timeSlotSelect.innerHTML = '<option value="">Select a time slot</option>';
+                    } else {
+                        errorDiv.textContent = '';
+                        fetchAvailableTimeSlots(selectedDate, doctorEmail);
+                    }
+                }
+            });
+        
+            doctorSelect.addEventListener('change', function() {
+                var selectedDate = dateInput.value;
+                var doctorEmail = this.value;
+        
+                // Clear time slots and error message
+                timeSlotSelect.innerHTML = '<option value="">Select a time slot</option>';
+                errorDiv.textContent = '';
+        
+                if (selectedDate) {
+                    var day = new Date(selectedDate).getDay();
+                    if (day !== 0 && day !== 6) { // 0 = Sunday, 6 = Saturday
+                        fetchAvailableTimeSlots(selectedDate, doctorEmail);
+                    }
+                }
+            });
+        });
+        
+        
+
+        function fetchAvailableTimeSlots(date, doctorEmail) {
+            var timeSlotSelect = document.getElementById('time-slot');
+            timeSlotSelect.innerHTML = '<option value="">Loading...</option>';
+            
+            fetch(`/get-available-time-slots/?date=${date}&doctor_email=${doctorEmail}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        timeSlotSelect.innerHTML = '<option value="">Error loading time slots</option>';
+                    } else {
+                        timeSlotSelect.innerHTML = '<option value="">Select a time slot</option>';
+                        data.timeSlots.forEach(slot => {
+                            var option = document.createElement('option');
+                            option.value = slot;
+                            option.textContent = slot;
+                            timeSlotSelect.appendChild(option);
+                        });
+                    }
+                })
+                .catch(error => {
+                    timeSlotSelect.innerHTML = '<option value="">Error loading time slots</option>';
+                    console.error('Error fetching time slots:', error);
+                });
+        }
+
+        function updateDoctorName() {
+            var select = document.getElementById('doctor-select');
+            var selectedOption = select.options[select.selectedIndex];
+            document.getElementById('doctorname').value = selectedOption.getAttribute('data-name');
+            
+            // Clear time slots and error message
+            var timeSlotSelect = document.getElementById('time-slot');
+            var errorDiv = document.getElementById('date-error');
+            
+            timeSlotSelect.innerHTML = '<option value="">Select a time slot</option>'; // Clear time slots
+            errorDiv.textContent = ''; // Clear error message
+        }
+        
+        // Handle initial state for date input based on doctor selection
+        document.getElementById('doctor-select').addEventListener('change', handleDoctorChange);
+        
+    </script>
 </body>
 
 </html>

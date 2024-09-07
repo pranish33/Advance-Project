@@ -27,7 +27,10 @@ urlpatterns = [
     path('viewhealthrecords/',views.viewhealthrecords,name='viewhealthrecords'),
     path('contact/',views.contactus,name='contactus'),
     path('PatientDeleteAppointment<int:pid>',views.patient_delete_appointment,name='patient_delete_appointment'),
-   
+    path('PatientHome',views.patienthome,name='patienthome'),
+    path('get-available-time-slots/', views.get_available_time_slots, name='get_available_time_slots'),
+
+
     path('logout/',views.Logout,name='logout'),
     #For Forgot Password and Reset Password
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name='forgot.html'), name="reset_password"),
