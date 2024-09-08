@@ -10,14 +10,10 @@ from django.views.decorators.http import require_GET
 from .models import Appointment
 from datetime import datetime, time
 
-
 # Create your views here.
 # homepage
 def homepage(request):
     return render(request, 'index.html')
-
-def patienthome(request):
-    return render(request, 'patienthome.html')
 
 def aboutpage(request):
     return render(request, 'about.html')
@@ -26,6 +22,24 @@ def aboutpage(request):
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
+def doctorhome(request):
+    if not request.user.is_active:
+        return redirect('loginpage')
+    # Logic for patient home page
+    return render(request, 'doctorhome.html')
+
+def patienthome(request):
+    if not request.user.is_active:
+        return redirect('loginpage')
+    # Logic for patient home page
+    return render(request, 'patienthome.html')
+
+def adminhome(request):
+    if not request.user.is_active:
+        return redirect('loginpage')
+    # Logic for patient home page
+    return render(request, 'adminhome.html')
+
 def loginpage(request):
     if request.method == 'POST':
         u = request.POST.get('email')
@@ -33,7 +47,6 @@ def loginpage(request):
         
         # Authenticate the user
         user = authenticate(request, username=u, password=p)
-        
         if user is not None:
             login(request, user)  # Log in the user
             
@@ -45,11 +58,11 @@ def loginpage(request):
                 g = user_groups[0].name
                 
                 if g == 'Doctor':
-                    return render(request, 'doctorhome.html', {'error': '', 'page': 'doctor'})
+                    return redirect('doctorhome')
                 elif g == 'Patient':
-                    return render(request, 'patienthome.html', {'error': '', 'page': 'patient'})
+                    return redirect('patienthome')
                 elif g == 'Admin':
-                    return render(request, 'adminhome.html', {'error': '', 'page': 'admin'})
+                    return redirect('adminhome')
                 else:
                     messages.error(request, 'User group not recognized.')
                     return redirect('loginpage')
@@ -61,7 +74,6 @@ def loginpage(request):
             return redirect('loginpage')
     
     return render(request, 'login.html')
-
 
 
 # creating account page for patients only
@@ -143,8 +155,8 @@ def adminaddDoctor(request):
     error = ""
     user = "none"
 
-    # if not request.user.is_staff:
-    #     return redirect('login_admin')
+    if not request.user.is_staff:
+        return redirect('home')
 
     if request.method == 'POST':
         name = request.POST['name']
@@ -179,8 +191,8 @@ def adminaddDoctor(request):
 
 # admin can view added doctors
 def adminviewDoctor(request):
-    # if not request.user.is_staff:
-    #     return redirect('login_admin')
+    if not request.user.is_staff:
+         return redirect('home')
     doc = Doctor.objects.all()
     d = {'doc': doc}
     return render(request, 'adminviewDoctors.html', d)
@@ -188,8 +200,8 @@ def adminviewDoctor(request):
 
 # admin can delete doctor
 def admin_delete_doctor(request, pid, email):
-    # if not request.user.is_staff:
-    #     return redirect('login_admin')
+    if not request.user.is_staff:
+         return redirect('home')
     doctor = Doctor.objects.get(id=pid)
     doctor.delete()
     users = User.objects.filter(username=email)
@@ -208,8 +220,8 @@ def patient_delete_appointment(request, pid):
 
 # admin can view appointment
 def adminviewAppointment(request):
-    # if not request.user.is_staff:
-    #     return redirect('login_admin')
+    if not request.user.is_staff:
+         return redirect('home')
     upcomming_appointments = Appointment.objects.filter(appointmentdate__gte=timezone.now(), status=True).order_by('appointmentdate', 'appointment_time') 
     # print("Upcomming Appointment",upcomming_appointments)
     previous_appointments = Appointment.objects.filter(appointmentdate__lt=timezone.now()).order_by(
@@ -234,27 +246,18 @@ def Logout_admin(request):
     logout(request)
     return redirect('loginpage')
 
-
-def AdminHome(request):
-    # Check if the user is authenticated and has staff status
-    if not request.user.is_authenticated or not request.user.is_staff:
-        return redirect('loginpage')  # Redirect to login page if not authorized
-    # Render the admin home page if the user is authorized
-    return render(request, 'adminhome.html')
-
-
 def Home(request):
     if not request.user.is_active:
         return redirect('loginpage')
 
     g = request.user.groups.all()[0].name
     if g == 'Doctor':
-        return render(request, 'doctorhome.html')
+        return redirect('doctorhome')
 
     elif g == 'Patient':
-        return render(request, 'patienthome.html')
+        return redirect('patienthome')
     elif g == 'Admin':
-        return render(request, 'adminhome.html')
+        return redirect('adminhome')
 
 
 # profile for doctor and patients
@@ -329,8 +332,11 @@ def viewappointments(request):
             followupdata = request.POST['followupdate']
             idvalue = request.POST['idofappointment']
         
-            Appointment.objects.filter(id=idvalue).update(prescription=prescriptiondata, followupdate=followupdata,
-                                                          status=False)
+            Appointment.objects.filter(id=idvalue).update(
+                prescription=prescriptiondata, 
+                followupdate=followupdata if followupdata else None,
+                status=False
+            )
 
         upcomming_appointments = Appointment.objects.filter(doctoremail=request.user,
                                                             appointmentdate__gte=timezone.now(), status=True).order_by('appointmentdate', 'appointment_time') 
@@ -373,7 +379,7 @@ def viewhealthrecords(request):
             '-appointmentdate') | Appointment.objects.filter(doctoremail=request.user, status=False).order_by(
             '-appointmentdate')
 
-        d = {"upcomming_appointments": upcomming_appointments, "previous_appointments": previous_appointments}
+        d = {"previous_appointments": previous_appointments}
         return render(request, 'doctorviewappointment.html', d)
 
 
@@ -391,11 +397,6 @@ def contactus(request):
         messages.info(request, 'Your Messages has been recorded. We will Contact you soon!!')
 
     return render(request, 'contactus.html')
-
-
-from django.http import JsonResponse
-from .models import Appointment
-from datetime import datetime
 
 @require_GET
 def get_available_time_slots(request):
