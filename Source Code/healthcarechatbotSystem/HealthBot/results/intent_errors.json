@@ -1,0 +1,50 @@
+[
+  {
+    "text": "type 2 symptom",
+    "intent": "type2_diabetes_symptoms",
+    "intent_prediction": {
+      "name": "type1_diabetes_symptoms",
+      "confidence": 0.5641375184059143
+    }
+  },
+  {
+    "text": "type 2 sign",
+    "intent": "type2_diabetes_symptoms",
+    "intent_prediction": {
+      "name": "type1_diabetes_symptoms",
+      "confidence": 0.5698318481445312
+    }
+  },
+  {
+    "text": "symptoms of type 2",
+    "intent": "type2_diabetes_symptoms",
+    "intent_prediction": {
+      "name": "type1_diabetes_symptoms",
+      "confidence": 0.5181689262390137
+    }
+  },
+  {
+    "text": "what are the sign and symptoms of type 2 diabetes",
+    "intent": "type2_diabetes_symptoms",
+    "intent_prediction": {
+      "name": "type1_diabetes_symptoms",
+      "confidence": 0.5419270992279053
+    }
+  },
+  {
+    "text": "what are the sign of type 2",
+    "intent": "type2_diabetes_symptoms",
+    "intent_prediction": {
+      "name": "type1_diabetes_symptoms",
+      "confidence": 0.7887499332427979
+    }
+  },
+  {
+    "text": "type 2 diabetes",
+    "intent": "type2_diabetes_symptoms",
+    "intent_prediction": {
+      "name": "type1_diabetes_symptoms",
+      "confidence": 0.7967439293861389
+    }
+  }
+]
